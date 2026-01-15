@@ -1,0 +1,55 @@
+END USER LICENSE AGREEMENT (EULA)
+
+This End User License Agreement ("Agreement") is between you ("You") and
+azenkwed ("Licensor") for the TubeGrab application ("Software").
+
+By installing, copying, or using the Software, You agree to be bound by this
+Agreement. If You do not agree, do not install or use the Software.
+
+1) License Grant
+Licensor grants You a non-exclusive, non-transferable, revocable license to
+install and use the Software for personal or commercial purposes on devices
+You control.
+
+2) Redistribution
+You may share and redistribute unmodified copies of the Software installers or
+packages distributed by Licensor (including mirrors or direct transfers),
+provided that this Agreement is included and no branding, notices, or
+attributions are removed.
+
+3) Restrictions
+You may not:
+- Reverse engineer, decompile, or disassemble the Software.
+- Modify, translate, or create derivative works of the Software.
+- Remove or alter any proprietary notices.
+- Use the Software to violate applicable laws or third-party rights.
+
+4) Ownership
+The Software is licensed, not sold. Licensor retains all rights, title, and
+interest in and to the Software and all related intellectual property.
+
+5) Third-Party Components
+The Software may include or rely on third-party components. Those components
+may be subject to their own licenses, and You are responsible for complying
+with those terms.
+
+6) Termination
+This Agreement terminates automatically if You breach its terms. Upon
+termination, You must stop using the Software and remove all copies in Your
+control.
+
+7) Disclaimer of Warranty
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+8) Limitation of Liability
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL LICENSOR BE LIABLE
+FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES,
+OR FOR ANY LOSS OF PROFITS, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR
+IN CONNECTION WITH THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
+9) Contact
+Questions about this Agreement can be directed to:
+https://github.com/azenkwed/tube-grab
