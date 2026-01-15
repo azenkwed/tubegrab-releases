@@ -1,5 +1,5 @@
 # User Manual
-Version: v0.3.4
+Version: v0.3.10
 
 ## Overview
 TubeGrab is a Qt desktop app for downloading audio or video using `yt-dlp` and `ffmpeg`. It stores your preferences in a local `settings.json` so your choices persist between launches.
