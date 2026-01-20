@@ -1,5 +1,5 @@
 # TubeGrab User Manual
-Version: v0.3.18
+Version: v0.3.19
 
 ## Overview
 TubeGrab is a desktop app for downloading audio or video from YouTube and YouTube Music. It stores your preferences in a local `settings.json` so your choices persist between launches.
