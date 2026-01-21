@@ -1,5 +1,5 @@
 # TubeGrab User Manual
-Version: v0.3.24
+Version: v0.3.25
 
 ## Overview
 TubeGrab is a desktop app for downloading audio or video from YouTube and YouTube Music. It stores your preferences in a local `settings.json` so your choices persist between launches.
@@ -18,6 +18,7 @@ TubeGrab is a desktop app for downloading audio or video from YouTube and YouTub
 ## Playlist Mode
 - **Single item**: Forces a single video even if the URL belongs to a playlist.
 - **Playlist (multiple)**: Downloads the full playlist when a playlist URL is provided.
+- Playlist downloads are saved into a subfolder named after the playlist. The name is sanitized for cross-OS safety (spaces become `_`, dots become `-`, quotes are removed, invalid path characters are stripped, and Windows-reserved names are prefixed). If the title is unavailable, the folder name defaults to `playlist`.
 
 ## Smart Defaults
 TubeGrab automatically adjusts defaults based on the URL:
