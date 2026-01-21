@@ -1,5 +1,5 @@
 # TubeGrab User Manual
-Version: v0.3.26
+Version: v0.4.10
 
 ## Overview
 TubeGrab is a desktop app for downloading audio or video from YouTube and YouTube Music. It stores your preferences in a local `settings.json` so your choices persist between launches.
@@ -19,6 +19,7 @@ TubeGrab is a desktop app for downloading audio or video from YouTube and YouTub
 - **Single item**: Forces a single video even if the URL belongs to a playlist.
 - **Playlist (multiple)**: Downloads the full playlist when a playlist URL is provided.
 - Playlist downloads are saved into a subfolder named after the playlist. The name is sanitized for cross-OS safety (spaces become `_`, dots become `-`, quotes are removed, invalid path characters are stripped, and Windows-reserved names are prefixed). If the title is unavailable, the folder name defaults to `playlist`.
+- Private playlists require authentication. Use the **Cookies** options in the app to read browser cookies or pick a cookies file.
 
 ## Smart Defaults
 TubeGrab automatically adjusts defaults based on the URL:
@@ -30,6 +31,13 @@ TubeGrab automatically adjusts defaults based on the URL:
 - **Embed thumbnail**: Adds the video thumbnail to the output file when supported.
 - **Embed metadata**: Writes metadata and clears the description field for cleaner tags.
 - **Dry run (no download)**: Simulates a download without saving files. The app still validates the URL and shows output in the log.
+- **Lazy playlist (start faster)**: Starts playlist downloads immediately instead of enumerating every item first.
+
+## JS Runtime & Cookies
+Some playlists and videos require a JavaScript runtime for signature solving or authentication. Use the **JS Runtime** selector to enable Deno (auto-download) or Node.js. Private playlists also need authentication; use the **Cookies** options to read browser cookies or pick a cookies file. These options are part of the Pro edition.
+
+## Planned Improvements
+- Add in-app sign-in for private playlists so authentication happens inside the app.
 
 ## Log Panel
 The log panel is hidden by default. Use the **Log Output** accordion header to expand or collapse the panel.
@@ -67,6 +75,7 @@ Examples:
 
 ## Tips & Troubleshooting
 - If `yt-dlp` or `ffmpeg` is missing, the app downloads them automatically when you start a download.
+- macOS downloads are Apple Silicon (arm64) only: M1, M2, M3, M4.
 - On Linux, the automatic tool download targets x86_64 only; install compatible `yt-dlp`/`ffmpeg` manually on other architectures.
 - If downloads fail, update `yt-dlp` and `ffmpeg` and retry.
 - Canceling a download stops the process cleanly without showing an error popup.

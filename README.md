@@ -1,13 +1,13 @@
 # TubeGrab Releases
-Version: v0.3.26
+Version: v0.4.10
 
 TubeGrab is a desktop app for downloading audio or video from YouTube and YouTube Music.
 
 ## Download
 - Latest release: https://github.com/azenkwed/tubegrab-releases/releases/latest
-- Windows: `TubeGrab-Setup.exe`
-- macOS: `TubeGrab-<version>.dmg`
-- Linux: `TubeGrab-<version>.AppImage`
+- Windows: `TubeGrab-Lite-<version>.exe` / `TubeGrab-Pro-<version>.exe`
+- macOS (arm64 only: M1/M2/M3/M4): `TubeGrab-Lite-<version>.dmg` / `TubeGrab-Pro-<version>.dmg`
+- Linux: `TubeGrab-Lite-<version>.AppImage` / `TubeGrab-Pro-<version>.AppImage`
 
 ## Install
 Windows:

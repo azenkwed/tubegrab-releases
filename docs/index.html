@@ -20,6 +20,7 @@
       </div>
       <nav class="nav">
         <a href="#download">Download</a>
+        <a href="#compare">Compare</a>
         <a href="#features">Features</a>
         <a href="#install">Install</a>
       </nav>
@@ -29,7 +30,7 @@
       <div class="hero-content">
         <div class="pill">
           Latest version
-          <span class="version" data-version="v0.3.26">v0.3.26</span>
+          <span class="version" data-version="v0.4.10">v0.4.10</span>
         </div>
         <h1>Grab it. Clean.</h1>
         <p>
@@ -43,6 +44,17 @@
           <a class="btn donate" href="https://ko-fi.com/azenkwed">
             Donate
           </a>
+        </div>
+        <div class="edition-select">
+          <span>Choose edition:</span>
+          <div class="edition-toggle" role="group" aria-label="Choose edition">
+            <button class="edition-option is-active" type="button" data-edition="lite" aria-pressed="true">
+              Lite
+            </button>
+            <button class="edition-option" type="button" data-edition="pro" aria-pressed="false">
+              Pro
+            </button>
+          </div>
         </div>
         <div class="download-note" id="download-note">
           Auto-selecting the best download for your device.
@@ -81,20 +93,75 @@
       </div>
     </section>
 
+    <section class="section" id="compare">
+      <h2>Lite vs Pro</h2>
+      <p class="section-sub">
+        Lite covers the core workflow. Pro adds authentication and speed tools for private or large playlists.
+      </p>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Lite</th>
+              <th class="col-pro">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature">Audio + video downloads</td>
+              <td>Yes</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">Playlist downloads</td>
+              <td>Yes</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">Playlist subfolders</td>
+              <td>Yes</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">Embed metadata + thumbnails</td>
+              <td>Yes</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">Cookies for private playlists</td>
+              <td>No</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">JS runtime for signature solving</td>
+              <td>No</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+            <tr>
+              <td class="feature">Lazy playlist (start faster)</td>
+              <td>No</td>
+              <td class="col-pro">Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="section" id="install">
       <h2>Install in minutes</h2>
       <div class="grid">
         <div class="card">
           <h3>Windows</h3>
-          <p>Run <strong>TubeGrab-Setup.exe</strong> and follow the prompts.</p>
+          <p>Run <strong>TubeGrab-Lite-&lt;version&gt;.exe</strong> or <strong>TubeGrab-Pro-&lt;version&gt;.exe</strong> and follow the prompts.</p>
         </div>
         <div class="card">
           <h3>macOS</h3>
-          <p>Open the DMG and drag TubeGrab into Applications.</p>
+          <p>Open the Lite/Pro DMG (arm64 only: M1/M2/M3/M4) and drag TubeGrab into Applications.</p>
         </div>
         <div class="card">
           <h3>Linux</h3>
-          <p>Mark the AppImage executable and run it.</p>
+          <p>Mark the Lite/Pro AppImage executable and run it.</p>
         </div>
       </div>
     </section>
@@ -113,6 +180,7 @@
       (function () {
         const download = document.getElementById("download");
         const note = document.getElementById("download-note");
+        const editionButtons = Array.from(document.querySelectorAll(".edition-option"));
         if (!download) {
           return;
         }
@@ -121,39 +189,75 @@
         const isMac = /Mac|iPhone|iPad|iPod/i.test(os);
         const isWindows = /Win/i.test(os);
         const isLinux = /Linux/i.test(os);
-        let desiredExt = "";
-        let label = "Download latest release";
-        if (isWindows) {
-          desiredExt = ".exe";
-          label = "Download for Windows";
-        } else if (isMac) {
-          desiredExt = ".dmg";
-          label = "Download for macOS";
-        } else if (isLinux) {
-          desiredExt = ".AppImage";
-          label = "Download for Linux";
-        }
-        download.textContent = label;
+        const platformLabel = isWindows ? "Windows" : isMac ? "macOS" : isLinux ? "Linux" : "";
+        const desiredExt = isWindows ? ".exe" : isMac ? ".dmg" : isLinux ? ".AppImage" : "";
+        let selectedEdition = "lite";
+        let assetsCache = null;
+
+        const editionLabel = () => (selectedEdition === "pro" ? "Pro" : "Lite");
+        const releaseUrl = "https://github.com/azenkwed/tubegrab-releases/releases/latest";
+
+        const setNote = (message) => {
+          if (note) {
+            note.textContent = message;
+          }
+        };
+
+        const updateButtonLabel = () => {
+          const label = platformLabel
+            ? `Download ${editionLabel()} for ${platformLabel}`
+            : `Download ${editionLabel()} release`;
+          download.textContent = label;
+        };
+
+        const updateSelection = (edition) => {
+          selectedEdition = edition === "pro" ? "pro" : "lite";
+          editionButtons.forEach((button) => {
+            const active = button.dataset.edition === selectedEdition;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+          updateButtonLabel();
+          setNote(`Selected: ${editionLabel()}. Auto-selecting the best download for your device.`);
+          updateDownloadLink();
+        };
+
+        const updateDownloadLink = () => {
+          if (!desiredExt || !assetsCache) {
+            download.href = releaseUrl;
+            return;
+          }
+          const prefix = `TubeGrab-${editionLabel()}-`;
+          const asset = assetsCache.find(
+            (item) => item.name && item.name.startsWith(prefix) && item.name.endsWith(desiredExt)
+          );
+          if (asset && asset.browser_download_url) {
+            download.href = asset.browser_download_url;
+            setNote(`Direct download (${asset.name})`);
+            return;
+          }
+          download.href = releaseUrl;
+          setNote("Direct download unavailable. Using latest releases page.");
+        };
+
+        updateButtonLabel();
+        setNote(`Selected: ${editionLabel()}. Auto-selecting the best download for your device.`);
+
+        editionButtons.forEach((button) => {
+          button.addEventListener("click", () => updateSelection(button.dataset.edition));
+        });
+
         fetch(`https://api.github.com/repos/${repo}/releases/latest`)
           .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
           .then((data) => {
-            if (!desiredExt || !data || !data.assets) {
+            if (!data || !data.assets) {
               return;
             }
-            const asset = data.assets.find((item) =>
-              item.name && item.name.endsWith(desiredExt)
-            );
-            if (asset && asset.browser_download_url) {
-              download.href = asset.browser_download_url;
-              if (note) {
-                note.textContent = `Direct download (${asset.name})`;
-              }
-            }
+            assetsCache = data.assets;
+            updateDownloadLink();
           })
           .catch(() => {
-            if (note) {
-              note.textContent = "Direct download unavailable. Using latest releases page.";
-            }
+            setNote("Direct download unavailable. Using latest releases page.");
           });
       })();
     </script>
